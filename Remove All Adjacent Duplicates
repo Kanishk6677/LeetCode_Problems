@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string removeDuplicates(string s, int k) {
+        string ans;
+        stack<int>st;
+        int n=s.size();
+        vector<int>count(n,1);
+        st.push(0);
+        for(int i=1;i<n;i++)
+        {
+            if(!st.empty())
+            {
+                if(s[i]==s[st.top()]) count[i]=count[st.top()]+1;
+            }
+            st.push(i);
+            if(count[i]==k)
+            {
+                for(int j=0;j<k;j++)
+                {
+                    st.pop();
+                }
+            }
+        }
+        while(!st.empty())
+        {
+            ans+=s[st.top()];
+            st.pop();
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
