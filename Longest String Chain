@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool isPre(string &word1,string &word2)
+    {
+        int cnt=0;
+        int i=0;
+        int j=0;
+        while(cnt<2 and i<word1.size())
+        {
+            if(word1[i]!=word2[j])
+            {
+                cnt++;
+                j++;
+            }
+            else
+            {
+                i++;
+                j++;
+            }
+        }
+        return cnt<=1 and i>=word1.size();
+    }
+     static bool cmp(string &w1,string &w2)
+    {
+        return w1.size()<w2.size();
+    }
+    int longestStrChain(vector<string>& words) {
+       int n=words.size();
+        int ans=1,i,j;
+        vector<int>dp(n,1);
+        sort(words.begin(),words.end(),cmp);
+        for(i=0;i<n;i++)
+        {
+            for(j=i+1;j<n;j++)
+            {
+                if(words[j].size()-words[i].size()>1) break;
+                if(words[j].size()-words[i].size()==1 and isPre(words[i],words[j]))
+                {
+                    dp[j]=max(dp[j],1+dp[i]);
+                    ans=max(dp[j],ans);
+                }
+            }
+        }
+        return ans;
+    }
+};
