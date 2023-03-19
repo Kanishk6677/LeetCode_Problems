@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> evenOddBit(int n) {
+         string binary = bitset<32>(n).to_string();
+    
+    // Initialize even and odd counts to zero
+    int even_count = 0;
+    int odd_count = 0;
+    
+    // Iterate over the binary string and count even and odd indices
+    for (int i = 0; i < binary.size(); i++) {
+        if (i % 2 == 0 && binary[i] == '1') {
+            even_count++;
+        } else if (i % 2 == 1 && binary[i] == '1') {
+            odd_count++;
+        }
+    }
+    
+    // Return the even and odd counts as a vector
+    return {odd_count,even_count};
+    }
+};
