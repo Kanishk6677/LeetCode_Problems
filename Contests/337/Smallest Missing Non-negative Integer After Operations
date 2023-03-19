@@ -1,0 +1,22 @@
+
+class Solution {
+public:
+    int  findSmallestInteger(vector<int>& nums, int value) {
+        map<long long ,long long > storage;
+        long long  i=0;
+        long long  mex=0;
+        for(i=0;i<nums.size();i++){
+            storage[(nums[i]%value + value) % value]++;
+        }
+        for(i=0;i<nums.size();i++){
+            if(storage[i%value]>0){
+                storage[i%value]--;
+                mex++;
+            }
+            else{
+                break;
+            }
+        }
+        return mex;
+    }
+};
