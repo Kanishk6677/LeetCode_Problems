@@ -1,0 +1,52 @@
+Given a binary string s, partition the string into one or more substrings such that each substring is beautiful.
+
+A string is beautiful if:
+
+It doesn't contain leading zeros.
+It's the binary representation of a number that is a power of 5.
+Return the minimum number of substrings in such partition. If it is impossible to partition the string s into beautiful substrings, return -1.
+
+A substring is a contiguous sequence of characters in a string.
+
+
+// Code
+class Solution {
+public:
+    bool isValid(string s)
+    {
+      if(s[0]=='0') return false;
+    int val=0;
+        for(int i=0;i<s.size();i++)
+        {
+            val*=2;
+            val+=(s[i]=='1'?1:0);
+        }
+        int curr=1;
+        while(curr<=val)
+        {
+            if(curr==val) return true; curr*=5;
+        }
+        return false;
+    }
+    int solve(string s)
+    {
+        
+        if(s.size()==0) return 0;
+        int ans=20;
+        for(int i=0;i<s.size();i++)
+        {
+            string c=s.substr(0,i+1);
+            if(isValid(c))
+            {
+                ans=min(ans,1+solve(s.substr(i+1)));
+            }
+        }
+        return ans;
+    }
+    int minimumBeautifulSubstrings(string s) {
+        int ans=solve(s);
+        if(ans>15) return -1;
+        return ans;
+    }
+};
+
