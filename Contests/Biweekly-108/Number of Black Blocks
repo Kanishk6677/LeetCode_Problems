@@ -1,0 +1,28 @@
+You are given two integers m and n representing the dimensions of a 0-indexed m x n grid.
+
+You are also given a 0-indexed 2D integer matrix coordinates, where coordinates[i] = [x, y] indicates that the cell with coordinates [x, y] is colored black. All cells in the grid that do not appear in coordinates are white.
+
+A block is defined as a 2 x 2 submatrix of the grid. More formally, a block with cell [x, y] as its top-left corner where 0 <= x < m - 1 and 0 <= y < n - 1 contains the coordinates [x, y], [x + 1, y], [x, y + 1], and [x + 1, y + 1].
+
+Return a 0-indexed integer array arr of size 5 such that arr[i] is the number of blocks that contains exactly i black cells.
+
+// code
+class Solution {
+public:
+    vector<long long> countBlackBlocks(int m, int n, vector<vector<int>>& coordinates) {
+        vector<long long>ans(5,0);
+        map<pair<int,int>,int>mp;
+        for(auto coor:coordinates)
+        {
+            int x=coor[0],y=coor[1];
+            if(x<m-1 and y<n-1) mp[{x,y}]++;
+            if(x-1>=0  && y<n-1) mp[{x-1,y}]++;
+            if(x<m-1 && y-1>=0) mp[{x,y-1}]++;
+            if(x-1>=0 && y-1>=0) mp[{x-1,y-1}]++;
+        }
+        for(auto it:mp) ans[it.second]++;
+        long long totalBlocks=(long long)(m-1)*(long long)(n-1);
+        ans[0]=totalBlocks-accumulate(ans.begin(),ans.end(),0);
+        return ans;
+    }
+};
